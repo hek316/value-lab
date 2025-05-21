@@ -1,30 +1,29 @@
 public class Game {
     private int width, height;
     private Room[] rooms;
-    private int x, y;
+    private Position position;
 
     private void showRoom() {
-        System.out.println("당신은 [ " +  roomAt(x, y).name() + " ] 에 있습니다.");
-        System.out.println(roomAt(x, y).description());
+        System.out.println("당신은 [ " +  roomAt(position).name() + " ] 에 있습니다.");
+        System.out.println(roomAt(position).description());
     }
 
-    private boolean isBlocked(int x, int y) {
-        return y < 0 || y >= height || x >= width || roomAt(x, y) == null;
+    private boolean isBlocked(Position position) {
+        return position.x() < 0 || position.y() >= height || position.x() >= width || roomAt(position) == null;
     }
 
     private void tryMove(int incX, int incY) {
-        if (isBlocked(x + incX, y + incY)) {
+        if (isBlocked(position.shift(incX, incY))) {
             showRoom();
         } else {
-            this.x += incX;
-            this.y += incY;
+            this.position = position.shift(incX, incY);
             showRoom();
         }
     }
 
 
-    private Room roomAt(int x, int y) {
-        return rooms[x + y * width];
+    private Room roomAt(Position position) {
+        return rooms[position.x() + position.y() * width];
     }
 
 }
