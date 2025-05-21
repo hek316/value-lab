@@ -13,7 +13,13 @@ public class Game {
     }
 
     private void tryMove(int incX, int incY) {
-
+        if (isBlocked(x + incX, y + incY)) {
+            showRoom();
+        } else {
+            this.x += incX;
+            this.y += incY;
+            showRoom();
+        }
     }
 
 
